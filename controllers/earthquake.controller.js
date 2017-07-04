@@ -26,8 +26,13 @@ let saveEarthquake = async function(req, res) {
         res.status(204).send({success: true, statuscode: 204});
 
     } catch (err) {
+
+        if(err.response.data === "Station Not Found") {
+            res.status(404).send({success: false, statuscode: 404, message: "Sensor not found"});
+            return;
+        }
+        
         res.status(500).send({success: false, statuscode: 500, message: "Internal server error"});
-        console.log(err);
     }
 
 };
