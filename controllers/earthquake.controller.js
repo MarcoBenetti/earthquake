@@ -12,9 +12,9 @@ let saveEarthquake = async function(req, res) {
     
     req.checkParams('id', 'Invalid ID as parameter').notEmpty().isInt();
     req.checkBody('date', 'Invalid date').notEmpty().isDate();
-    req.checkBody('xAxis', 'Invalid x axis measure').notEmpty().isInt();
-    req.checkBody('yAxis', 'Invalid y axis measure').notEmpty().isInt();
-    req.checkBody('zAxis', 'Invalid z axis measure').notEmpty().isInt();
+    req.checkBody('xAxis', 'Invalid x axis measure').notEmpty().isDecimal();
+    req.checkBody('yAxis', 'Invalid y axis measure').notEmpty().isDecimal();
+    req.checkBody('zAxis', 'Invalid z axis measure').notEmpty().isDecimal();
 
     let errors = req.validationErrors();
 
