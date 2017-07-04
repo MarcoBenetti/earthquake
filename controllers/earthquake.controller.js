@@ -10,20 +10,20 @@ let saveEarthquake = async function(req, res) {
     let yAxis = req.body.yAxis;
     let zAxis = req.body.zAxis;
     
+    req.checkParams('id', 'Invalid ID as parameter').notEmpty().isInt();
+    req.checkBody('date', 'Invalid date').notEmpty().isDate();
+    req.checkBody('xAxis', 'Invalid x axis measure').notEmpty().isInt();
+    req.checkBody('yAxis', 'Invalid y axis measure').notEmpty().isInt();
+    req.checkBody('zAxis', 'Invalid z axis measure').notEmpty().isInt();
+
+    let errors = req.validationErrors();
+
+    if(errors) {
+        res.status(400).send({success: false, statuscode: 400, message: errors});
+        return;
+    }
+
     try {
-
-        req.checkBody('date', 'Invalid date').notEmpty().isDate();
-        req.checkBody('xAxis', 'Invalid x axis measure').notEmpty().isInt();
-        req.checkBody('yAxis', 'Invalid y axis measure').notEmpty().isInt();
-        req.checkBody('zAxis', 'Invalid z axis measure').notEmpty().isInt();
-
-        let errors = req.validationErrors();
-
-        if(errors) {
-            res.status(400).send({success: false, statuscode: 400, message: errors});
-            return;
-        }
-
         //check sysmograph status
         let result = await axios({method:'get', url:'https://pw2017b.mvlabs.it/check/' + id});
 
